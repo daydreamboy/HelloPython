@@ -110,7 +110,18 @@ type函数可以检查变量类型[^6]
 
 
 
-https://stackoverflow.com/questions/28705029/pycharm-error-no-module-when-trying-to-import-own-module-python-script
+#### argparse使用步骤
+
+1. import argparse模块
+2. 创建parser
+3. parser添加optional和positional参数
+4. parser执行parse_args()方法
+
+
+
+#### argparse示例程序
+
+
 
 
 
