@@ -1,12 +1,14 @@
 """dump tool for debugging
 
-1.
+非同级目录引用其他模块，有三种方式
+
+1. 执行python，加上PYTHONPATH环境变量
 PYTHONPATH=~/GitHub_Projects/HelloPython/python_tool python3 test_dump_tool.py
 
-2.
+2. 在shell配置文件中（`.bashrc`, `.bash_profile`, etc），设置PYTHONPATH环境变量
 export PYTHONPATH=$HOME/GitHub_Projects/HelloPython/python_tool
 
-3.
+3. 在import other_module语句之前，将该other_module模块所在文件夹路径，加入到sys.path中
 import sys
 sys.path.append('/path/to/whatever')
 

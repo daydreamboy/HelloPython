@@ -46,6 +46,32 @@ function()
 
 #### 非同级目录引用模块
 
+非同级目录引用其他模块，有三种方式[^4]，如下
+
+* 执行python，加上PYTHONPATH环境变量
+
+```shell
+$ PYTHONPATH=~/GitHub_Projects/HelloPython/python_tool python3 test_dump_tool.py
+```
+
+* 在shell配置文件中（`.bashrc`, `.bash_profile`, etc），设置PYTHONPATH环境变量
+
+```shell
+export PYTHONPATH=$HOME/GitHub_Projects/HelloPython/python_tool
+```
+
+* 在import other_module语句之前，将该other_module模块所在文件夹路径，加入到sys.path中
+
+```python
+import sys
+sys.path.append('/path/to/whatever')
+
+# Ok, other_module can be found
+import other_module
+```
+
+
+
 
 
 
@@ -87,6 +113,8 @@ https://stackoverflow.com/questions/28705029/pycharm-error-no-module-when-trying
 [^1]:https://stackoverflow.com/a/7948504
 [^2]:https://stackoverflow.com/questions/6605851/argparse-module-not-working-in-python
 [^3]:https://stackoverflow.com/questions/5875810/importerror-when-trying-to-import-a-custom-module-in-python
+
+[^4]:https://stackoverflow.com/a/5875962
 
 
 
