@@ -72,6 +72,24 @@ import other_module
 
 
 
+### （2）字符串（string）
+
+
+
+#### f-strings格式
+
+Python 3.6引入f-strings语法[^5]，支持字符串中替换变量，举个例子如下
+
+```python
+a = 'Hello'
+b = 'world'
+
+if __name__ == '__main__':
+    print(f"{a}, {b}!")
+```
+
+
+
 
 
 
@@ -143,6 +161,7 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 [^3]:https://stackoverflow.com/questions/5875810/importerror-when-trying-to-import-a-custom-module-in-python
 
 [^4]:https://stackoverflow.com/a/5875962
+[^5]:https://stackoverflow.com/a/4450610
 
 
 
