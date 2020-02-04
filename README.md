@@ -104,7 +104,7 @@ type函数可以检查变量类型[^6]
 
 
 
-### （1）argparse
+### （1）argparse[^7]
 
 ​        argparse是Python3.2+内置模块（module），用于替换optparse。argparse用于解析命令行参数，产生帮助和使用信息，以及产生错误提示。
 
@@ -116,6 +116,16 @@ type函数可以检查变量类型[^6]
 2. 创建parser
 3. parser添加optional和positional参数
 4. parser执行parse_args()方法
+
+
+
+#### ArgumentParser参数详解
+
+
+
+#### add_argument参数详解
+
+
 
 
 
@@ -180,6 +190,8 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 [^4]:https://stackoverflow.com/a/5875962
 [^5]:https://stackoverflow.com/a/4450610
 [^6]:https://stackoverflow.com/questions/402504/how-to-determine-a-python-variables-type
+
+[^7]:https://realpython.com/command-line-interfaces-python-argparse/
 
 
 
