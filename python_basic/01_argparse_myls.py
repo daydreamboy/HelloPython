@@ -14,6 +14,7 @@ my_parser = argparse.ArgumentParser(
 
 # Add the arguments
 my_parser.add_argument('Path', metavar='path', type=str, help='the path to list')
+my_parser.add_argument('/v', '//verbose', action='store_true', help='an optional argument')
 
 # Execute the parse_args() method
 args = my_parser.parse_args()

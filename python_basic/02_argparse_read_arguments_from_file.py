@@ -1,5 +1,5 @@
 # Usage:
-# $ python3 01_argparse_read_arguments_from_file.py @args.txt
+# $ python3 02_argparse_read_arguments_from_file.py @args.txt
 
 import argparse
 
@@ -16,6 +16,9 @@ my_parser.add_argument('-v', '--verbose', action='store_true', help='an optional
 # execute parse_args()
 args = my_parser.parse_args()
 
+print(args)
+
+print(f"-v = {args.verbose}")
 print(f"a = {args.a}")
 print(f"b = {args.b}")
 print(f"c = {args.c}")
