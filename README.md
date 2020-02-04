@@ -90,6 +90,12 @@ if __name__ == '__main__':
 
 
 
+### （3）内置函数（builtin function）
+
+#### type()
+
+type函数可以检查变量类型[^6]
+
 
 
 
@@ -162,6 +168,9 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 
 [^4]:https://stackoverflow.com/a/5875962
 [^5]:https://stackoverflow.com/a/4450610
+[^6]:https://stackoverflow.com/questions/402504/how-to-determine-a-python-variables-type
+
+
 
 
 

@@ -20,6 +20,7 @@ import inspect
 import re
 
 
+# @see https://stackoverflow.com/a/592849
 def dump_object(var):
     frame_info = inspect.getframeinfo(inspect.currentframe().f_back)
     valid = False
