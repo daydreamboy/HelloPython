@@ -90,6 +90,26 @@ https://stackoverflow.com/questions/28705029/pycharm-error-no-module-when-trying
 
 
 
+#### 执行argparse.py报错的问题
+
+举个例子，如下
+
+```shell
+$ python3 argparse.py 
+Traceback (most recent call last):
+  File "argparse.py", line 1, in <module>
+    import argparse
+  File "/.../argparse.py", line 7, in <module>
+    parser = argparse.ArgumentParser(description='Process some integers.')
+AttributeError: module 'argparse' has no attribute 'ArgumentParser'
+```
+
+原因：python文件名和系统module名冲突。优先认为当前文件argparse.py是argparse模块，它里面没有ArgumentParser属性，因此报错。
+
+解决方法：重命名python文件[^2]
+
+
+
 
 
 ## pip命令
@@ -103,6 +123,14 @@ https://stackoverflow.com/questions/28705029/pycharm-error-no-module-when-trying
 
 
 ## 附录
+
+### （1）PyCharm使用常见问题
+
+#### 自定义module，不被PyCharm识别，产生报错提示[^3]
+
+在右键选中对应module所在文件夹，Mark Directory > Sources Root
+
+> In the project explorer, right-click on the directory that you want import. Then select `Mark Directory As` and select `Sources Root`.
 
 
 
