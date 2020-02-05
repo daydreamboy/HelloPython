@@ -26,7 +26,6 @@ data['people'].append({
 
 def main():
     my_parser = argparse.ArgumentParser(description='Write JSON to string')
-    my_parser.add_argument('-p', '--path', help='The path of input JSON file', required=True)
     my_parser.add_argument('-k', '--keyOrdered', action='store_true',
                            help='Sort key by order. Default is not unordered')
 
@@ -36,16 +35,11 @@ def main():
     my_group.add_argument('-c', '--compact', action='store_true', help='Output compact string of JSON')
 
     args = my_parser.parse_args()
-    file_path = args.path
     indent = args.indent
     # compact JSON: @see https://stackoverflow.com/a/33233406
     # ternary operator: @see https://stackoverflow.com/a/394814
     separators = (',', ':') if args.compact else (', ', ': ')
     sort_keys = args.keyOrdered
-
-    if not os.path.exists(file_path):
-        logging.error(f"The file not exists: {file_path}")
-        return 1
 
     json_string = json.dumps(data, indent=indent, separators=separators, sort_keys=sort_keys)
     print(json_string)
