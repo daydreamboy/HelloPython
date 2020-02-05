@@ -155,6 +155,12 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 
 
 
+### （2）json[^8]
+
+
+
+
+
 
 
 ## pip命令
@@ -192,6 +198,10 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 [^6]:https://stackoverflow.com/questions/402504/how-to-determine-a-python-variables-type
 
 [^7]:https://realpython.com/command-line-interfaces-python-argparse/
+
+[^8]:https://stackabuse.com/reading-and-writing-json-to-a-file-in-python/
+
+
 
 
 
