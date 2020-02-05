@@ -1,5 +1,13 @@
 {
     "fruit": "Apple",
     "size": "Large",
-    "color": "Red"
+    "color": "Red",
+    "null": null,
+    "float": 3.14,
+    "integer": 3,
+    "boolean": true,
+    "list": [1, 2, 3],
+    "map": {
+        "key": "value"
+    }
 }

@@ -25,7 +25,7 @@ def dump_object(var):
     frame_info = inspect.getframeinfo(inspect.currentframe().f_back)
     valid = False
     for line in frame_info[3]:
-        m = re.search(r'\bdump_object\s*\(\s*([A-Za-z_][A-Za-z0-9_.]*)\s*\)', line)
+        m = re.search(r'\bdump_object\s*\(\s*(.+)\s*\)', line)
         if m:
             valid = True
             filename = frame_info[0]
