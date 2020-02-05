@@ -1,11 +1,24 @@
 import numbers
 
 
+# @see https://stackoverflow.com/a/18935765
+def escape_string(string):
+    config = {"\"": r"\"",
+              "\\": r"\\",
+              "\n": r"\n",
+              "\b": r"\b",
+              "\f": r"\f",
+              "\r": r"\r",
+              "\t": r"\t",
+              }
+    return string.translate(str.maketrans(config))
+
+
 def generate_literal_oc_string(json_object, indent_level, start_indent_length, indent_length, ordered, is_root_container):
     if isinstance(json_object, bool):
         return '@YES' if json_object else '@NO'
     elif isinstance(json_object, str):
-        return f"@\"{json_object}\""
+        return f"@\"{escape_string(json_object)}\""
     elif isinstance(json_object, numbers.Number):
         return f"@({json_object})"
     elif isinstance(json_object, dict) or isinstance(json_object, list):

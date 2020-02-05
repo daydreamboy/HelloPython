@@ -7,5 +7,12 @@
     "list": [1, 2, 3],
     "map": {
         "key": "value"
-    }
+    },
+    "escape_quotes": "{\"key\":\"value\"}",
+    "escape_quotes2": "{\"key\":\"{\\\"name\\\":\\\"John\\\",\\\"id\\\":\\\"1565589097507\\\",\\\"homepage\\\":\\\"https://google.com/1565589097507/welcome.html\\\"}\",\"age\":20}",
+    "escape_control_chars1": "{\"key\":\"A line include \n char\"}",
+    "escape_control_chars2": "{\"key\":\"A line include \b char\"}",
+    "escape_control_chars3": "{\"key\":\"A line include \f char\"}",
+    "escape_control_chars4": "{\"key\":\"A line include \r char\"}",
+    "escape_control_chars5": "{\"key\":\"A line include \t char\"}"
 }

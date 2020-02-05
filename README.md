@@ -86,7 +86,14 @@ b = 'world'
 
 if __name__ == '__main__':
     print(f"{a}, {b}!")
+    print(f"{a}, {{b}}!")
 ```
+
+
+
+https://stackoverflow.com/a/42521252
+
+
 
 
 
@@ -168,6 +175,12 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 #### 字符串和JSON之间序列化和反序列化
 
 
+
+（3）collections
+
+
+
+（4）datetime
 
 
 
