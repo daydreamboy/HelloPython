@@ -29,6 +29,8 @@ def main():
     my_parser.add_argument('-p', '--path', help='The path of output JSON file', required=True)
     my_parser.add_argument('-o', '--overwrite', action='store_true',
                            help='Overwrite the file if the output file already exists')
+    my_parser.add_argument('-k', '--keyOrdered', action='store_true',
+                           help='Sort key by order. Default is not unordered')
 
     my_group = my_parser.add_mutually_exclusive_group()
     my_group.add_argument('-i', '--indent', type=int, default=None,
@@ -38,10 +40,11 @@ def main():
     args = my_parser.parse_args()
     file_path = args.path
     overwrite_file = args.overwrite
-    indentation = args.indent
+    indent = args.indent
     # compact JSON: @see https://stackoverflow.com/a/33233406
     # ternary operator: @see https://stackoverflow.com/a/394814
     separators = (',', ':') if args.compact else (', ', ': ')
+    sort_keys = args.keyOrdered
 
     if not overwrite_file and os.path.exists(file_path):
         logging.error(f"The file already exists: {file_path}")
@@ -50,7 +53,7 @@ def main():
     # @see https://stackabuse.com/reading-and-writing-json-to-a-file-in-python/
     with open(file_path, 'w') as file:
         print(data)
-        json.dump(data, file, indent=indentation, separators=separators)
+        json.dump(data, file, indent=indent, separators=separators, sort_keys=sort_keys)
 
     return 1
 
