@@ -89,9 +89,11 @@ if __name__ == '__main__':
     print(f"{a}, {{b}}!")
 ```
 
+说明
+
+> 1. 如果要对`{`和`}`进行转义，可以使用`{{`和`}}`表示[^9]
 
 
-https://stackoverflow.com/a/42521252
 
 
 
@@ -117,6 +119,19 @@ type函数可以检查变量类型[^6]
 
 
 
+#### 介绍CLI参数
+
+CLI（Command Line Interface）定义命令行工具的参数协议，对于命令行参数分为下面两种
+
+* optional argument，可选参数（也可以配置为必选），多个可选参数和顺序无关，示例格式为`-h`或`--help`。
+* positionnal argument，固定参数（可以必选或可选），多个固定参数和顺序有关
+
+说明
+
+> 可选参数的参数，称为parameter，示例如`--level 2`。
+
+
+
 #### argparse使用步骤
 
 1. import argparse模块
@@ -128,17 +143,104 @@ type函数可以检查变量类型[^6]
 
 #### ArgumentParser参数详解
 
+ArgumentParser是argparse module中的类，用于创建parser。这个类的构造参数（可选），如下
+
+* prog：程序的名称。默认是sys.argv[0]
+* usage：用法提示。默认自动生成
+* description：程序描述
+* epilog：结束语，位于参数描述的下面
+* prefix_chars：可选参数的前缀符号。默认是`-`
+* fromfile_prefix_chars：用于调试时，指定参数文件（命令行参数存到文件中）的前缀符号，例如`@`
+* add_help：是否自动添加`-h/--help`可选参数。默认是True
+* allow_abbrev：是否允许可选参数简写，即在没有歧义下，`--help`可以写为`--he`、`--hel`等。默认是True
+
 
 
 #### add_argument参数详解
 
+add_argument是ArgumentParser实例的方法，用于添加parser的需要解析的参数。
 
+
+
+##### 添加optional argument
+
+```python
+my_parser.add_argument('-l', '--long')
+```
+
+需要两个参数，同时有前缀
+
+
+
+##### 添加positional argument
+
+```python
+my_parser.add_argument('Path')
+```
+
+需要一个参数，区分大小写
+
+
+
+add_argument方法的其他参数，如下
+
+* metavar：参数的名称，参数释义中显示的标识
+* type：参数按照指定类型解析。默认是字符串类型
+* required：是否必选。默认是False
+* action：解析的特定操作。默认是store
+  * store，按照指定类型存储
+  * store_const（需要额外指定const），按照常量（const）的值存储
+  * store_true，存储True
+  * store_false，存储False
+  * append，允许多个相同的可选参数，存储到同一个list中
+  * append_const（需要额外指定const），允许多个相同的可选参数，存储常量（const）的值到同一个list中
+  * count，允许多个相同的可选参数，计算个数，将个数存储
+  * help，打印帮助信息并退出程序
+  * version，打印版本信息并退出程序
+
+* nargs：指定可选参数的个数，支持数字和通配符
+  * ?，一个或者无
+  * *，任意多个
+  * +，至少一个
+  * argparse.REMAINDER，剩余所有的参数
+
+* default：设置默认值
+
+* choices：指定参数的值在某个范围中，例如`choices=['head', 'tail']`、`choices=range(1, 5)`
+* dest：my_parser.parse_args()返回对象中对应参数的属性名
 
 
 
 #### argparse示例程序
 
+```python
+import argparse
+import sys
+import os
 
+# Create the parser
+my_parser = argparse.ArgumentParser(
+    prog='myls',
+    usage='%(prog)s [options] path',
+    epilog='Enjoy the program!',
+    prefix_chars='/',
+    description='List the content of a folder')
+
+# Add the arguments
+my_parser.add_argument('Path', metavar='path', type=str, help='the path to list')
+my_parser.add_argument('/v', '//verbose', action='store_true', help='an optional argument')
+
+# Execute the parse_args() method
+args = my_parser.parse_args()
+
+input_path = args.Path
+
+if not os.path.isdir(input_path):
+    print('The path specified does not exist')
+    sys.exit()
+
+print('\n'.join(os.listdir(input_path)))
+```
 
 
 
@@ -221,6 +323,8 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 [^7]:https://realpython.com/command-line-interfaces-python-argparse/
 
 [^8]:https://stackabuse.com/reading-and-writing-json-to-a-file-in-python/
+
+[^9]:https://stackoverflow.com/a/42521252
 
 
 
