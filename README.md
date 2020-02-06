@@ -107,6 +107,10 @@ type函数可以检查变量类型[^6]
 
 
 
+#### isinstance()
+
+判断实例对象是否属于某些类型
+
 
 
 ## 2、Python常用库
@@ -266,23 +270,59 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 
 ### （2）json[^8]
 
+Python内置库提供json模块，用于处理JSON。
+
 
 
 #### 文件和JSON之间序列化和反序列化
 
+* 读JSON文件（json.load）
 
+```python
+with open(file_path, 'r') as file:
+    json_object = json.load(file)
+```
+
+
+
+* 写JSON文件（json.dump）
+
+```python
+with open(file_path, 'w') as file:
+    json.dump(data, file, indent=indent, separators=separators, sort_keys=sort_keys)
+```
 
 
 
 #### 字符串和JSON之间序列化和反序列化
 
+* 读JSON字符串
+
+```python
+json_object = json.loads(json_string)
+```
 
 
-（3）collections
+
+* 写JSON字符串
+
+```python
+json_string = json.dumps(data, indent=indent, separators=separators, sort_keys=sort_keys)
+```
 
 
 
-（4）datetime
+
+
+### （3）collections
+
+
+
+
+
+### （4）datetime
+
+
 
 
 
