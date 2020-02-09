@@ -6,11 +6,74 @@
 
 
 
-### （1）模块（module）
+### （1）module[^10]（模块）
 
-#### 模块
+#### module分类
 
-Python的单个文件是一个模块（module），在同级目录下，当前模块可以直接引用其他模块，有两种引用方式，如下
+Python定义module，有三种方式
+
+* Python的单个文件
+* 用C写的module，然后运行时加载。例如re（regular expression）module
+* builtin module模块，包含在Python编译器（interpreter）中。例如itertools module
+
+上面三种模块都用import语句导入。
+
+
+
+#### module的搜索路径
+
+当使用`import mod`语句时，Python编译器搜索mod.py的顺序，如下
+
+* 当前输入脚本的所在文件夹，或者运行python交互环境的当前文件夹
+* PYTHONPATH环境变量中列出文件夹路径，可以有多个，类似PATH环境变量
+* Python安装时所配置的文件夹路径，一般是Python安装目录
+
+搜索路径可以用`sys.path`来确认，例如
+
+```python
+>>> import sys
+>>> sys.path
+['', 'C:\\Users\\john\\Documents\\Python\\doc', 'C:\\Python36\\Lib\\idlelib',
+'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
+'C:\\Python36', 'C:\\Python36\\lib\\site-packages']
+```
+
+因此，为了能引用到对应的python文件，可以将文件放在上面三种搜索对应的地方。
+
+除此之外，可以运行时来修改`sys.path`，来引用到对应的python文件。例如
+
+```python
+>>> sys.path.append(r'C:\Users\john')
+>>> sys.path
+['', 'C:\\Users\\john\\Documents\\Python\\doc', 'C:\\Python36\\Lib\\idlelib',
+'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
+'C:\\Python36', 'C:\\Python36\\lib\\site-packages', 'C:\\Users\\john']
+>>> import mod
+```
+
+
+
+#### 确认module的所在位置
+
+每个module有`__file__`变量，用于表示该文件所在的路径。例如
+
+```python
+>>> import mod
+>>> mod.__file__
+'C:\\Users\\john\\mod.py'
+
+>>> import re
+>>> re.__file__
+'C:\\Python36\\lib\\re.py'
+```
+
+
+
+
+
+#### Python单个文件模块
+
+​       Python的单个文件是一个模块（module），在同级目录下，当前模块可以直接引用其他模块，有两种引用方式，如下
 
 - 导入模块
 
@@ -365,6 +428,10 @@ json_string = json.dumps(data, indent=indent, separators=separators, sort_keys=s
 [^8]:https://stackabuse.com/reading-and-writing-json-to-a-file-in-python/
 
 [^9]:https://stackoverflow.com/a/42521252
+
+[^10]:https://realpython.com/python-modules-packages/
+
+
 
 
 
