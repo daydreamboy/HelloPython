@@ -1,0 +1,26 @@
+{
+  "next": false,
+  "list": [
+    {
+      "env": "public",
+      "id": 73,
+      "style": "left",
+      "namespace": "message",
+      "ext": "{\"url\":\"https://domain/app/path/to/pages/index?h=native\"}",
+      "mappingId": 73,
+      "type": "component",
+      "updateTime": 1580886159460
+    },
+    {
+      "env": "public",
+      "id": 74,
+      "style": "right",
+      "namespace": "message",
+      "ext": "",
+      "mappingId": 74,
+      "type": "component",
+      "updateTime": 1581487578770
+    }
+  ],
+  "timestamp": 1581487578770
+}

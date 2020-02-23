@@ -1,0 +1,31 @@
+{
+  "list": [
+    {
+      "group": "default",
+      "list": [
+        {
+          "env": "public",
+          "group": "default",
+          "data": "{\"tplUrl\":\"https://path/to/main.js\",\"timestamp\":\"800\"}",
+          "id": 136,
+          "type": 1,
+          "namespace": "message",
+          "updateTime": 1535529241138,
+          "version": 1
+        },
+        {
+          "env": "public",
+          "group": "base",
+          "data": "{\"json\":\"{\\\"name\\\":\\\"some_name\\\",\\\"version\\\":\\\"2\\\",\\\"url\\\":\\\"https://path/index.zip\\\"}\",\"timestamp\":\"10\"}",
+          "id": 2,
+          "type": 3,
+          "namespace": "message",
+          "updateTime": 1581321820010,
+          "version": 8
+        }
+      ],
+      "next": false,
+      "timestamp": 1581321820010
+    }
+  ]
+}

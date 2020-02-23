@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 """dump tool for debugging
 
 非同级目录引用其他模块，有三种方式
@@ -18,6 +21,7 @@ sys.path.append('/path/to/whatever')
 
 import inspect
 import re
+import sys
 
 
 # @see https://stackoverflow.com/a/592849
@@ -28,13 +32,17 @@ def dump_object(var):
         m = re.search(r'\bdump_object\s*\(\s*(.+)\s*\)', line)
         if m:
             valid = True
-            filename = frame_info[0]
+            file_name = frame_info[0]
             line_number = frame_info[1]
             variable_name = m.group(1)
             variable_type = type(var)
 
-            print(f"[Debug] {filename}:{line_number}: {variable_name} = ({variable_type}) {var}")
+            # @see https://stackoverflow.com/a/11277768
+            if sys.version_info >= (3, 0):
+                print(f"[Debug] {file_name}:{line_number}: {variable_name} = ({variable_type}) {var}")
+            else:
+                print("[Debug] {file_name}:{line_number}: {variable_name} = ({variable_type}) {var}".format(file_name=file_name, line_number=line_number, variable_name=variable_name, variable_type=variable_type, var=var))
 
     if not valid:
-        print(f"[Error] parse variable failed. Its value is {var}. frame_info: {frame_info}")
+        print("[Error] parse variable failed. Its value is {var}. frame_info: {frame_info}" % (var, frame_info))
 
