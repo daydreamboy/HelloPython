@@ -164,15 +164,37 @@ if __name__ == '__main__':
 
 ### （3）内置函数（builtin function）
 
-#### type()
+#### type函数
 
 type函数可以检查变量类型[^6]
 
 
 
-#### isinstance()
+#### isinstance函数
 
 判断实例对象是否属于某些类型
+
+
+
+#### print函数
+
+print可以传入任意多个参数，默认用空格分隔。
+
+举个例子
+
+```python
+print('[Debug]', message)
+```
+
+
+
+函数签名，如下
+
+```python
+print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
+```
+
+
 
 
 
@@ -387,6 +409,17 @@ json_string = json.dumps(data, indent=indent, separators=separators, sort_keys=s
 
 
 
+### （5）os.path
+
+| 函数       | 作用              |
+| ---------- | ----------------- |
+| join       | 拼接path          |
+| expanduser | 展开path中的~符号 |
+
+
+
+> 示例代码，见27_module_os_path.py
+
 
 
 ## pip命令
@@ -430,6 +463,8 @@ json_string = json.dumps(data, indent=indent, separators=separators, sort_keys=s
 [^9]:https://stackoverflow.com/a/42521252
 
 [^10]:https://realpython.com/python-modules-packages/
+
+
 
 
 

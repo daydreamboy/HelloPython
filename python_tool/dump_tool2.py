@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
 """dump tool for debugging
@@ -6,7 +6,7 @@
 非同级目录引用其他模块，有三种方式
 
 1. 执行python，加上PYTHONPATH环境变量
-PYTHONPATH=~/GitHub_Projects/HelloPython/python_tool python3 test_dump_tool.py
+PYTHONPATH=~/GitHub_Projects/HelloPython/python_tool python2 test_dump_tool2.py
 
 2. 在shell配置文件中（`.bashrc`, `.bash_profile`, etc），设置PYTHONPATH环境变量
 export PYTHONPATH=$HOME/GitHub_Projects/HelloPython/python_tool
@@ -37,12 +37,9 @@ def dump_object(var):
             variable_name = m.group(1)
             variable_type = type(var)
 
-            # @see https://stackoverflow.com/a/11277768
-            if sys.version_info >= (3, 0):
-                print(f"[Debug] {file_name}:{line_number}: {variable_name} = ({variable_type}) {var}")
-            else:
-                print('[Debug] {file_name}:{line_number}: {variable_name} = ({variable_type}) {var}'.format(file_name=file_name, line_number=line_number, variable_name=variable_name, variable_type=variable_type, var=var))
+            print('[Debug] {file_name}:{line_number}: {variable_name} = ({variable_type}) {var}'.format(file_name=file_name, line_number=line_number, variable_name=variable_name, variable_type=variable_type, var=var))
 
     if not valid:
-        print("[Error] parse variable failed. Its value is {var}. frame_info: {frame_info}" % (var, frame_info))
+        print(frame_info)
+        #print("[Error] parse variable failed. Its value is {var}. frame_info: {frame_info}".format(var=var, frame_info=frame_info))
 
