@@ -196,6 +196,25 @@ print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
 
 
+### （4）内置常量
+
+#### \__file__常量
+
+\__file__表示当前脚本的路径。举个例子，如下
+
+```python
+def test__file__():
+    print(__file__)  # ./27_module__file__.py if python ./27_module__file__.py
+    print(os.path.basename(__file__))  # 27_module__file__.py
+    print(os.path.splitext(os.path.basename(__file__))[0])  # 27_module__file__
+```
+
+> 示例代码，见27_module\__file__.py 
+
+
+
+
+
 
 
 ## 2、Python常用库
