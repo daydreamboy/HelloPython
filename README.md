@@ -416,6 +416,16 @@ json_string = json.dumps(data, indent=indent, separators=separators, sort_keys=s
 
 
 
+##### 压缩JSON
+
+```python
+json.dumps(jsonObj, separators=(',', ':'), ensure_ascii=False, sort_keys=True).encode('utf8')
+```
+
+separators默认是`(', ', ': ')`，这里去掉后面的空格。
+
+
+
 
 
 ### （3）collections
