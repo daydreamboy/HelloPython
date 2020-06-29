@@ -451,7 +451,15 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 
 
-## pip命令
+
+
+
+
+
+
+## 附录
+
+### （1）pip命令
 
 
 
@@ -461,11 +469,33 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 
 
-## 附录
+### （2）常用pip包
 
-### （1）PyCharm使用常见问题
+#### a. cocoapods-graph[^12]
 
-#### 自定义module，不被PyCharm识别，产生报错提示[^3]
+安装
+
+```shell
+$ sudo pip install cocoapods-graph
+```
+
+
+
+使用
+
+```shell
+$ cocoapods-graph -f Podfile.lock --html
+Saving html file...
+done
+```
+
+
+
+
+
+### （3）PyCharm使用常见问题
+
+#### a. 自定义module，不被PyCharm识别，产生报错提示[^3]
 
 在右键选中对应module所在文件夹，Mark Directory > Sources Root
 
@@ -494,6 +524,10 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 [^10]:https://realpython.com/python-modules-packages/
 
 [^11]:https://stackoverflow.com/a/16311587
+
+[^12]:https://pypi.org/project/cocoapods-graph/
+
+
 
 
 
