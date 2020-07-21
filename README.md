@@ -158,6 +158,36 @@ if __name__ == '__main__':
 
 
 
+#### format函数
+
+Python2的str类提供实例方法format，用于格式化字符串。format函数签名，如下
+
+```python
+str.format(*args, **kwargs)
+```
+
+format函数可以接受任意多个参数。
+
+format函数的调用字符串，是必现符合特定格式化语法的字符串，类似C的printf函数。
+
+格式化字符串语法[^13]（Format String Syntax），如下
+
+```
+format_spec ::=  [[fill]align][sign][#][0][width][,][.precision][type]
+fill        ::=  <any character>
+align       ::=  "<" | ">" | "=" | "^"
+sign        ::=  "+" | "-" | " "
+width       ::=  integer
+precision   ::=  integer
+type        ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o" | "s" | "x" | "X" | "%"
+```
+
+
+
+
+
+
+
 
 
 
@@ -193,6 +223,10 @@ print('[Debug]', message)
 ```python
 print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 ```
+
+
+
+
 
 
 
@@ -526,6 +560,8 @@ done
 [^11]:https://stackoverflow.com/a/16311587
 
 [^12]:https://pypi.org/project/cocoapods-graph/
+
+[^13]:https://docs.python.org/2.7/library/string.html#formatstrings
 
 
 
