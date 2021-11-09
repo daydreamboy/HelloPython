@@ -184,9 +184,37 @@ type        ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o"
 
 
 
+TODO
+
+https://stackoverflow.com/questions/5466451/how-can-i-print-literal-curly-brace-characters-in-a-string-and-also-use-format
 
 
 
+#### split函数
+
+split函数的签名，如下
+
+```python
+// Python 2
+str.split([sep[, maxsplit]])
+// Python 3
+str.split(sep=None, maxsplit=- 1)
+```
+
+* sep，表示分隔符。默认可以没有
+* maxsplit，表示分隔的次数
+
+关于maxsplit参数，举个例子，如下
+
+```python
+if __name__ == '__main__':
+    string = 'a b c'
+    print(string.split())  # ['a', 'b', 'c']
+    print(string.split(None))  # ['a', 'b', 'c']
+    print(string.split(None, 1))  # ['a', 'b c']
+```
+
+> 示例代码，见25_builtin_type_str_split.py
 
 
 
