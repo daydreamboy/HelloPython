@@ -4,9 +4,7 @@
 
 ## 1、Python语法
 
-
-
-### （1）module[^10]（模块）
+### (1) module[^10]（模块）
 
 #### module分类
 
@@ -135,7 +133,7 @@ import other_module
 
 
 
-### （2）字符串（string）
+### (2) 字符串（string）
 
 
 
@@ -220,7 +218,7 @@ if __name__ == '__main__':
 
 
 
-### （3）内置函数（builtin function）
+### (3) 内置函数（builtin function）
 
 #### type函数
 
@@ -256,9 +254,7 @@ print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
 
 
-
-
-### （4）内置常量
+### (4) 内置常量
 
 #### \__file__常量
 
@@ -283,7 +279,7 @@ def test__file__():
 
 
 
-### （1）argparse[^7]
+### (1) argparse[^7]
 
 ​        argparse是Python3.2+内置模块（module），用于替换optparse。argparse用于解析命令行参数，产生帮助和使用信息，以及产生错误提示。
 
@@ -434,7 +430,7 @@ AttributeError: module 'argparse' has no attribute 'ArgumentParser'
 
 
 
-### （2）json[^8]
+### (2) json[^8]
 
 Python内置库提供json模块，用于处理JSON。
 
@@ -478,7 +474,7 @@ json_string = json.dumps(data, indent=indent, separators=separators, sort_keys=s
 
 
 
-##### 压缩JSON[^11]
+#### 压缩JSON[^11]
 
 ```python
 json.dumps(jsonObj, separators=(',', ':'), ensure_ascii=False, sort_keys=True).encode('utf8')
@@ -490,17 +486,17 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 
 
-### （3）collections
+### (3) collections
 
 
 
 
 
-### （4）datetime
+### (4) datetime
 
 
 
-### （5）os.path
+### (5) os.path
 
 | 函数       | 作用              |
 | ---------- | ----------------- |
@@ -521,9 +517,48 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 ## 附录
 
-### （1）pip命令
+### (1) 安装python3
+
+安装前，python3使用系统默认的python3，如下
+
+```shell
+$ which python3
+/usr/bin/python3
+$ python3 --version        
+Python 3.9.6
+```
+
+使用Homebrew安装python3
+
+```shell
+$ brew install python3
+```
+
+安装后，如下
+
+```shell
+$ which python3
+/usr/local/bin/python3
+$ python3 --version   
+Python 3.11.3
+```
+
+说明
+
+> 使用Homebrew安装python3，也安装pip3命令，如下
+>
+> ```shell
+> $ which pip3
+> /usr/local/bin/pip3
+> $ pip3 --version
+> pip 23.0.1 from /usr/local/lib/python3.11/site-packages/pip (python 3.11)
+> ```
+>
+> 
 
 
+
+### (2) pip命令
 
 | 命令                      | 作用    |
 | ------------------------- | ------- |
@@ -531,7 +566,7 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 
 
-### （2）常用pip包
+### (3) 常用pip包
 
 #### a. cocoapods-graph[^12]
 
@@ -555,7 +590,7 @@ done
 
 
 
-### （3）PyCharm使用常见问题
+### (4) PyCharm使用常见问题
 
 #### a. 自定义module，不被PyCharm识别，产生报错提示[^3]
 
