@@ -509,9 +509,82 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 
 
+## 3、常见问题
+
+### (1) 设置python为python3
+
+在macOS 12.3上，已经没有Python 2，但是有些历史脚本还是使用python。因此，需要设置python别名，指向python3命令。
+
+```shell
+$ which python3
+/usr/local/bin/python3
+$ ll | grep python      
+lrwxr-xr-x  1 wesley_chen  wheel    40B Apr 18 19:21 python3 -> ../Cellar/python@3.11/3.11.3/bin/python3
+...
+$ ln -s python3 /usr/local/bin/python 
+```
+
+说明
+
+> 1. ln命令的格式：ln  -s source_file target_file
+> 2. 使用alias方法，需要修改很多shell的资源文件，不能一劳永逸
 
 
 
+### (2) Python 2和Python 3共存使用
+
+在macOS 12.3上，已经没有Python 2，可以使用`pyenv`来维护多个版本的python
+
+按照下面几个步骤使用Python 2[^14]
+
+* 安装pyenv，`brew install pyenv`
+* 列出Python所有版本，`pyenv install --list`
+* 安装最新Python2的版本，`pyenv install 2.7.18`
+
+* 列出pyenv已安装的Python所有版本，`pyenv versions`
+
+  ```shell
+  $ pyenv versions
+  * system (set by /Users/wesley_chen/.pyenv/version)
+    2.7.18
+  ```
+
+* 将python命令设置2.7.18版本
+
+  ```shell
+  $ pyenv global 2.7.18
+  ```
+
+* 到这里，pyenv不会修改python，依然找不到python命令。根据使用的shell配置对应资源文件，添加一行`eval "$(pyenv init --path)"`
+
+  * zsh，`~/.zshrc`或`~/.zprofile`
+
+    ```shell
+    $ python --version
+    Python 2.7.18
+    $ python3 --version
+    Python 3.11.3
+    $ pyenv versions
+      system
+    * 2.7.18 (set by /Users/wesley_chen/.pyenv/version)
+    ```
+
+  * bash，`~/.bash_profile`
+
+    ```shell
+    $ bash
+    bash-3.2$ python --version
+    Python 2.7.18
+    bash-3.2$ python3 --version
+    Python 3.11.3
+    bash-3.2$ pyenv versions  
+      system
+    * 2.7.18 (set by /Users/wesley_chen/.pyenv/version)
+    ```
+
+说明
+
+> 配置shell资源文件，需要重新打开terminal
 
 
 
@@ -626,7 +699,7 @@ done
 
 [^13]:https://docs.python.org/2.7/library/string.html#formatstrings
 
-
+[^14]:https://stackoverflow.com/questions/71591971/how-can-i-fix-the-zsh-command-not-found-python-error-macos-monterey-12-3
 
 
 
