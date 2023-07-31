@@ -1,3 +1,9 @@
+##
+# This script is used for batch forking all projects under source groups to the target group
+# To configure .env file before run this script
+#
+# Usage: $ python3 ./fork.py
+#
 import time 
 # pip3 install python-gitlab==1.4
 import gitlab
@@ -15,9 +21,10 @@ groups = json.loads(os.getenv('groups'))
 target_namespace = os.getenv('target_namespace')
 target_namespace_id = os.getenv('target_namespace_id')
 private_token = os.getenv('private_token')
+gitlab_url = os.getenv('gitlab_url')
 
 # Note: change gitlab web url here
-gl = gitlab.Gitlab('https://gitlab.example.com',
+gl = gitlab.Gitlab(gitlab_url,
                    private_token=private_token,
                    ssl_verify=True,
                    api_version='3')
