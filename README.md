@@ -509,7 +509,62 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 
 
-## 3、常见问题
+## 3、Python常用三方库
+
+### (1) python-gitlab
+
+安装方法：
+
+```shell
+$ pip3 install python-gitlab
+```
+
+
+
+#### gitlab v3 API
+
+
+
+https://www.cnblogs.com/40kuai/p/9378038.html
+
+
+
+### (2)  python-dotenv
+
+安装方法：
+
+```shell
+$ pip3 install python-dotenv
+```
+
+使用方法：
+
+* 和python脚本同级下，配置`.env`文件
+
+举个例子，如下
+
+```properties
+array=["element1","element2"]
+string = 'This is a string' # some comment
+```
+
+* 代码导入dotenv模块，以及相关函数
+
+举个例子，如下
+
+```python
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
+array = json.loads(os.getenv('array'))
+string = os.getenv('string')
+```
+
+代码上其他使用方式，参考[官方文档](https://pypi.org/project/python-dotenv/)
+
+
+
+## 4、常见任务
 
 ### (1) 设置python为python3
 
@@ -588,6 +643,72 @@ $ ln -s python3 /usr/local/bin/python
 
 
 
+### (3) 添加自定义源
+
+这里使用pip3的user级别的配置，添加自定义源。在`~/.pip/pip.conf`文件，添加下面内容
+
+```properties
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+trusted-host = pypi.tuna.tsinghua.edu.cn
+```
+
+这里使用清华大学提供pypi源。
+
+如果有多个源，可以按照下面方式配置[^16]，如下
+
+```properties
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple/
+trusted-host = mirrors.aliyun.com
+               pypi.tuna.tsinghua.edu.cn
+extra-index-url= https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+参考这篇文章[^17]提供的国内的源，如下
+
+```properties
+阿里云: https://mirrors.aliyun.com/pypi/simple/
+清华: https://pypi.tuna.tsinghua.edu.cn/simple/
+中国科技大学: https://pypi.mirrors.ustc.edu.cn/simple/
+华中理工大学: https://pypi.hustunique.com/
+山东理工大学: https://pypi.sdutlinux.org/ 
+豆瓣: https://pypi.douban.com/simple/
+```
+
+
+
+## 5、常见问题
+
+### (1) pip3 search报错
+
+执行`pip3 search`命令会报错，如下
+
+```shell
+$ pip3 search gitlab
+ERROR: XMLRPC request failed [code: -32500]
+RuntimeError: PyPI no longer supports 'pip search' (or XML-RPC search). Please use https://pypi.org/search (via a browser) instead. See https://warehouse.pypa.io/api-reference/xml-rpc.html#deprecated-methods for more information.
+```
+
+参考这里文章的解释[^15]，官方停用pip search命令，推荐使用浏览器打开https://pypi.org/search来查询。
+
+解决方法：安装pip-search包，使用pip_search搜索，如下
+
+```shell
+$ pip3 install pip-search
+$ pip_search gitlab
+                      🐍 https://pypi.org/search/?q=gitlab 🐍                          
+┏━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Package                 ┃ Version        ┃ Released   ┃ Description                  ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+┃ 📂 gitlab3              │ 0.5.8          │ 18-03-2017 │ GitLab API v3 Python Wrapper.┃
+...
+```
+
+根据提示信息，可以知道pip_search也是通过查询https://pypi.org/search/得到数据
+
+
+
 ## 附录
 
 ### (1) 安装python3
@@ -618,7 +739,7 @@ Python 3.11.3
 
 说明
 
-> 使用Homebrew安装python3，也安装pip3命令，如下
+> 使用Homebrew安装python3，也自动安装pip3命令，如下
 >
 > ```shell
 > $ which pip3
@@ -639,7 +760,116 @@ Python 3.11.3
 
 
 
-### (3) 常用pip包
+### (3) `pip.conf`文件
+
+pip3（后面简称pip）提供三种方式，配置pip3命令的参数
+
+* 命令行参数
+* 环境变量
+* `pip.conf`配置文件
+
+这里主要介绍`pip.conf`配置文件。完整文档可以参考这篇[官方文档](https://pip.pypa.io/en/stable/topics/configuration/)
+
+`pip.conf`配置文件有三种配置级别：
+
+* global（全局）
+* user（用户）
+* site
+
+在MacOS系统上面这三种级别配置，对应的`pip.conf`文件路径，如下
+
+* global
+
+```shell
+/Library/Application Support/pip/pip.conf
+```
+
+* user
+
+```shell
+# 优先使用这个路径
+$HOME/Library/Application Support/pip/pip.conf
+# 其次使用这个路径
+$HOME/.config/pip/pip.conf
+```
+
+* site
+
+```shell
+$VIRTUAL_ENV/pip.conf
+```
+
+环境变量`PIP_CONFIG_FILE`，可以指定`pip.conf`配置文件的路径。
+
+
+
+#### a. `pip.conf`文件加载顺序
+
+`pip.conf`文件加载，按照下面的顺序
+
+- `PIP_CONFIG_FILE`环境变量
+- Global
+- User
+- Site
+
+后者总是覆盖前者，应该是根据相同的key，进行值覆盖。
+
+
+
+#### b. `pip.conf`文件的格式
+
+`pip.conf`文件的格式。举个例子，如下
+
+```properties
+[global]
+timeout = 60
+index-url = https://download.zope.org/ppix
+
+[install]
+ignore-installed = true
+no-dependencies = yes
+
+[freeze]
+timeout = 10
+```
+
+
+
+#### c. `pip3 config`命令
+
+`pip3 config`命令，用于管理本地和全局配置。它可以查看和编辑`pip.conf`文件。`pip3 config`命令对应的官方文档在[这里](https://pip.pypa.io/en/stable/cli/pip_config/)
+
+使用下面命令，可以查看完整的`pip3 config`命令的帮助信息
+
+```shell
+$ pip3 help config
+```
+
+查看`~/.config/pip/pip.conf`，如下
+
+```shell
+$ pip3 config list
+global.index-url='https://pypi.tuna.tsinghua.edu.cn/simple'
+install.trusted-host='pypi.tuna.tsinghua.edu.cn'
+```
+
+如果`pip3 config`命令不提供`--user`、`--global` 或 `--site`，该命令默认是user级别。
+
+`~/.config/pip/pip.conf`的实际内容，如下
+
+```properties
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+
+[install]
+trusted-host = pypi.tuna.tsinghua.edu.cn
+```
+
+
+
+
+
+### (4) 常用pip包
 
 #### a. cocoapods-graph[^12]
 
@@ -701,11 +931,9 @@ done
 
 [^14]:https://stackoverflow.com/questions/71591971/how-can-i-fix-the-zsh-command-not-found-python-error-macos-monterey-12-3
 
-
-
-
-
-
+[^15]:https://www.jianshu.com/p/0d55f82d8d08
+[^16]:https://stackoverflow.com/questions/30889494/can-pip-conf-specify-two-index-url-at-the-same-time
+[^17]:https://zhuanlan.zhihu.com/p/404529640
 
 
 
