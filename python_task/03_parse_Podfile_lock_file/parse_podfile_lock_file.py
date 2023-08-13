@@ -41,6 +41,7 @@ import argparse
 
 # Note: different version of cocoapods, the format of the Podfile.lock is slightly different
 
+## Podfile.lock keywords
 PODS='PODS'
 DEPENDENCIES='DEPENDENCIES'
 COCOAPODS='COCOAPODS'
@@ -49,6 +50,13 @@ PODFILE_CHECKSUM='PODFILE CHECKSUM'
 EXTERNAL_SOURCES='EXTERNAL SOURCES'
 SPEC_REPOS='SPEC REPOS'
 SEPARATOR=':'
+
+## Custom keywords
+POD_VERSIONS='POD_VERSIONS'
+
+## Private keys
+POD_INFO_NAME='pod_name'
+POD_INFO_VERSION='pod_version'
 
 def main():
     args = run_command_parser()
@@ -95,8 +103,8 @@ def get_PODS_components(cocoapods_version, file_content):
         pod_version = line.strip(" -:").split(" ")[1].strip("()")
 
         pod_info_dict = {
-            'pod_name': pod_name,
-            'pod_version': pod_version,
+            POD_INFO_NAME: pod_name,
+            POD_INFO_VERSION: pod_version,
         }
 
         if line.endswith(":"):
@@ -112,12 +120,12 @@ def get_PODS_components(cocoapods_version, file_content):
                     if len(components) == 2:
                         dependency_pod_version = components[1].strip(")")
                         dependency_pod_info = {
-                            'pod_name': dependency_pod_name,
-                            'pod_version': dependency_pod_version,
+                            POD_INFO_NAME: dependency_pod_name,
+                            POD_INFO_VERSION: dependency_pod_version,
                         }
                     else:
                         dependency_pod_info = {
-                            'pod_name': dependency_pod_name,
+                            POD_INFO_NAME: dependency_pod_name,
                         }
                     dependency_pod_list.append(dependency_pod_info)
                     next_index += 1
@@ -157,12 +165,12 @@ def get_DEPENDENCIES_components(cocoapods_version, file_content):
         if len(components) == 2:
             pod_version = components[1].strip(')')
             pod_info = {
-                'pod_name': pod_name,
-                'pod_version': pod_version,
+                POD_INFO_NAME: pod_name,
+                POD_INFO_VERSION: pod_version,
             }
         else:
             pod_info = {
-                'pod_name': pod_name,
+                POD_INFO_NAME: pod_name,
             }
         dependency_list.append(pod_info)
 
@@ -197,6 +205,26 @@ def get_cocoapods_version(file_content):
 
     return version
 
+def get_pod_version_dict(PODS_components, DEPENDENCIES_components):
+    missed_pod_list = []
+    pod_version_dict = {}
+    for x in PODS_components:
+        pod_name = x[POD_INFO_NAME] if POD_INFO_NAME in x else None
+        pod_version = x[POD_INFO_VERSION] if POD_INFO_VERSION in x else None
+        if pod_name and pod_version:
+            pod_version_dict[pod_name] = pod_version
+        elif pod_name and pod_version is None:
+            missed_pod_list.append(pod_name)
+
+    if len(missed_pod_list) > 0:
+        for x in DEPENDENCIES_components:
+            pod_name = x[POD_INFO_NAME] if POD_INFO_NAME in x else None
+            pod_version = x[POD_INFO_VERSION] if POD_INFO_VERSION in x else None
+            if pod_name in missed_pod_list and pod_name and pod_version:
+                pod_version_dict[pod_name] = pod_version
+    
+    return pod_version_dict
+
 
 def run_podfile_lock_file_parser(podfile_lock_file_path, args):
     logging.info("Podfile.lock path: %s" % podfile_lock_file_path)
@@ -211,26 +239,38 @@ def run_podfile_lock_file_parser(podfile_lock_file_path, args):
         f.close()
     
     cocoapods_version = get_cocoapods_version(file_content)
-    print(f"cocoapods_version = {cocoapods_version}")
+    print(f"cocoapods_version = {cocoapods_version}") if args.debug else None
     PODS_components = get_PODS_components(cocoapods_version, file_content)
-    print(f"1 = {cocoapods_version}")
+    logging.debug(f"finish {PODS} section") if args.debug else None
 
     DEPENDENCIES_components = get_DEPENDENCIES_components(cocoapods_version, file_content)
-    print(f"2 = {cocoapods_version}")
+    logging.debug(f"finish {DEPENDENCIES} section") if args.debug else None
 
     SPEC_CHECKSUMS_components = get_SPEC_CHECKSUMS_components(cocoapods_version, file_content)
-    print(f"3 = {cocoapods_version}")
+    logging.debug(f"finish {SPEC_CHECKSUMS} section") if args.debug else None
 
-    if args.json_output_file.strip():
+    pod_version_dict= get_pod_version_dict(PODS_components, DEPENDENCIES_components)
+
+    if args.json_output_file and args.json_output_file.strip():
         out_file = open(args.json_output_file, "w")
         json_list = [
             { PODS: PODS_components },
             { DEPENDENCIES: DEPENDENCIES_components },
             { SPEC_CHECKSUMS: SPEC_CHECKSUMS_components },
+            { POD_VERSIONS: pod_version_dict },
         ]
         out_file.writelines(json.dumps(json_list))
         out_file.close()
 
+    if isinstance(args.query_pod_list, list):
+        pod_dict = {}
+        pod_list = args.query_pod_list
+        for x in pod_list:
+            if x in pod_version_dict:
+                pod_dict[x] = pod_version_dict[x]
+        output = json.dumps(pod_dict)
+        sys.stdout.write(output)
+    
     return
 
 def run_command_parser():
@@ -238,6 +278,7 @@ def run_command_parser():
     my_parser.add_argument('-p', '--path', help='The path of Podfile.lock file', required=True)
     my_parser.add_argument('-d', '--debug', action='store_true', help='The debug mode')
     my_parser.add_argument('-j', '--json-output-file', help='The path of output JSON file', required=False)
+    my_parser.add_argument('-q', '--query-pod-list', action='store', type=str, nargs='+')
     args = my_parser.parse_args()
     return args
 
