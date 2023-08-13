@@ -153,6 +153,7 @@ if __name__ == '__main__':
 说明
 
 > 1. 如果要对`{`和`}`进行转义，可以使用`{{`和`}}`表示[^9]
+> 1. f-strings语法也支持单引号的字符串，例如print(f'{a}, {b}!')
 
 
 
@@ -275,9 +276,7 @@ def test__file__():
 
 
 
-## 2、Python常用库
-
-
+## 2、Python常用模块
 
 ### (1) argparse[^7]
 
@@ -506,6 +505,42 @@ separators默认是`(', ', ': ')`，这里去掉后面的空格。
 
 
 > 示例代码，见27_module_os_path.py
+
+
+
+### (6) venv
+
+venv是Python3内置的虚拟环境管理工具，可以帮助用户创建虚拟环境，隔离不同Python项目所使用的依赖包。
+
+```
+python -m venv venv_name
+```
+
+
+
+```
+source venv_name/bin/activate
+```
+
+
+
+```
+pip install requests
+```
+
+
+
+```
+python script.py
+```
+
+
+
+```
+deactivate
+```
+
+
 
 
 
