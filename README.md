@@ -4,13 +4,13 @@
 
 ## 1、Python语法
 
-### (1) module[^10]（模块）
+### (1) 模块[^10]（module）
 
-#### module分类
+#### a. module分类
 
 Python定义module，有三种方式
 
-* Python的单个文件
+* 单个Python文件作为模块
 * 用C写的module，然后运行时加载。例如re（regular expression）module
 * builtin module模块，包含在Python编译器（interpreter）中。例如itertools module
 
@@ -18,7 +18,7 @@ Python定义module，有三种方式
 
 
 
-#### module的搜索路径
+#### b. module的搜索路径
 
 当使用`import mod`语句时，Python编译器搜索mod.py的顺序，如下
 
@@ -51,7 +51,7 @@ Python定义module，有三种方式
 
 
 
-#### 确认module的所在位置
+#### b. 确认module的所在位置
 
 每个module有`__file__`变量，用于表示该文件所在的路径。例如
 
@@ -67,9 +67,7 @@ Python定义module，有三种方式
 
 
 
-
-
-#### Python单个文件模块
+#### c. 单个Python文件作为模块
 
 ​       Python的单个文件是一个模块（module），在同级目录下，当前模块可以直接引用其他模块，有两种引用方式，如下
 
@@ -99,13 +97,13 @@ function()
 
 
 
-#### 包和模块的关系[^1]
+#### d. 包和模块的关系[^1]
 
 模块（module）是单个文件，而包（package）是一组模块的集合。
 
 
 
-#### 非同级目录引用模块
+#### e. 非同级目录引用其他模块
 
 非同级目录引用其他模块，有三种方式[^4]，如下
 
