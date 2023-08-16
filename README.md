@@ -253,11 +253,11 @@ print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
 
 
-### (4) 内置常量
+### (4) 内置属性（attribute）
 
-#### \__file__常量
+#### `__file__`属性
 
-\__file__表示当前脚本的路径。举个例子，如下
+`__file__`表示当前脚本的路径。举个例子，如下
 
 ```python
 def test__file__():
@@ -269,6 +269,79 @@ def test__file__():
 > 示例代码，见27_module\__file__.py 
 
 
+
+#### `__name__`属性
+
+`__name__`表示当前模块的名字，它是可以被修改的，不是固定的值。
+
+目前有两种情况：
+
+* 直接执行脚本，那么`__name__`是`__main__`。例如python脚本经常遇到的范式，如下
+
+  ```python
+  def main():
+      # 一些代码逻辑
+  
+  if __name__ == '__main__':
+      main()
+  ```
+
+* 使用import导入脚本，那么`__name__`是脚本的名字，去掉py扩展名
+
+举个例子，如下
+
+`27_module___name__callee.py`脚本的内容
+
+```python
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+
+def do_something():
+    print(f"__name__ = {__name__}")
+
+
+if __name__ == '__main__':
+    do_something()
+```
+
+* 如果直接执行这个脚本，则输出
+
+```shell
+$ ./27_module___name__callee.py
+__name__ = __main__
+```
+
+* 如果导入这个脚本，调用脚本中的do_something函数，则输出
+
+```shell
+$ ./27_module___name__caller.py 
+__name__ = 27_module___name__callee
+```
+
+说明
+
+> import不支持以数字开头的脚本名字，则使用importlib模块完成这种特殊的情况。`27_module___name__caller.py `的内容，如下
+>
+> ```python
+> #!/usr/bin/python3
+> # -*- coding: utf-8 -*-
+> 
+> import importlib
+> 
+> 
+> def main():
+>     module_name = '27_module___name__callee'  # 以数字开头的脚本名字
+>     module = importlib.import_module(module_name)
+>     module.do_something()
+> 
+> 
+> if __name__ == '__main__':
+>     main()
+> 
+> ```
+>
+> 一般情况直接使用import语句
 
 
 
@@ -570,6 +643,57 @@ callee.py的内容，如下
 
 print('{"Hello":"World"}', end="")
 ```
+
+
+
+### (8) logging
+
+#### a. 修改日志级别
+
+举个例子，如下
+
+```python
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+import logging
+
+
+def test_default_log_level():
+    logging.debug('This is DEBUG')
+    logging.info('This is INFO')
+    logging.warning('This is WARNING')
+    logging.error('This is ERROR')
+    logging.critical('This is CRITICAL')
+
+
+def test_change_log_level():
+    logging.getLogger().setLevel(logging.DEBUG)
+    logging.debug('This is DEBUG')
+    logging.info('This is INFO')
+    logging.warning('This is WARNING')
+    logging.error('This is ERROR')
+    logging.critical('This is CRITICAL')
+
+
+def test_custom_logger():
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logger.debug('This is DEBUG')
+    logger.info('This is INFO')
+    logger.warning('This is WARNING')
+    logger.error('This is ERROR')
+    logger.critical('This is CRITICAL')
+
+
+test_default_log_level()
+print('-----------')
+test_change_log_level()
+print('-----------')
+test_custom_logger()
+```
+
+
 
 
 
