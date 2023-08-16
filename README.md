@@ -540,6 +540,39 @@ deactivate
 
 
 
+### (7) subprocess
+
+#### a. 执行其他脚本
+
+subprocess提供check_output函数，用于执行脚本并获取结果。
+
+举个例子，如下
+
+```python
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+import subprocess
+
+# 执行另一个Python脚本并获取输出结果
+output = subprocess.check_output(["python3", "callee.py"])
+output = output.decode('utf-8')
+
+# 输出结果
+print(f"result: `{output}`")
+```
+
+callee.py的内容，如下
+
+```python
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+print('{"Hello":"World"}', end="")
+```
+
+
+
 
 
 ## 3、Python常用三方库
