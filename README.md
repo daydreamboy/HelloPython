@@ -51,7 +51,7 @@ Python定义module，有三种方式
 
 
 
-#### b. 确认module的所在位置
+#### c. 确认module的所在位置
 
 每个module有`__file__`变量，用于表示该文件所在的路径。例如
 
@@ -67,7 +67,7 @@ Python定义module，有三种方式
 
 
 
-#### c. 单个Python文件作为模块
+#### d. 单个Python文件作为模块
 
 ​       Python的单个文件是一个模块（module），在同级目录下，当前模块可以直接引用其他模块，有两种引用方式，如下
 
@@ -97,13 +97,13 @@ function()
 
 
 
-#### d. 包和模块的关系[^1]
+#### e. 包和模块的关系[^1]
 
 模块（module）是单个文件，而包（package）是一组模块的集合。
 
 
 
-#### e. 非同级目录引用其他模块
+#### f. 非同级目录引用其他模块
 
 非同级目录引用其他模块，有三种方式[^4]，如下
 
@@ -255,7 +255,7 @@ print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
 ### (4) 内置属性（attribute）
 
-#### `__file__`属性
+#### a. `__file__`属性
 
 `__file__`表示当前脚本的路径。举个例子，如下
 
@@ -270,7 +270,9 @@ def test__file__():
 
 
 
-#### `__name__`属性
+#### b. `__name__`属性
+
+##### 1. 模块的`__name__`属性
 
 `__name__`表示当前模块的名字，它是可以被修改的，不是固定的值。
 
@@ -342,6 +344,33 @@ __name__ = 27_module___name__callee
 > ```
 >
 > 一般情况直接使用import语句
+
+
+
+##### 2. 函数的`__name__`属性
+
+函数也有内置`__name__`属性，它的值是函数名，没有参数列表
+
+举个例子，如下
+
+```python
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+
+def my_function(i):
+    print(f"{my_function.__name__} called: i = {i}")
+
+
+def main():
+    my_function(1)
+
+
+if __name__ == '__main__':
+    main()
+```
+
+
 
 
 
