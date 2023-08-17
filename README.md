@@ -295,7 +295,7 @@ def test__file__():
 `27_module___name__callee.py`脚本的内容
 
 ```python
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
@@ -326,7 +326,7 @@ __name__ = 27_module___name__callee
 > import不支持以数字开头的脚本名字，则使用importlib模块完成这种特殊的情况。`27_module___name__caller.py `的内容，如下
 >
 > ```python
-> #!/usr/bin/python3
+> #!/usr/bin/env python3
 > # -*- coding: utf-8 -*-
 > 
 > import importlib
@@ -354,7 +354,7 @@ __name__ = 27_module___name__callee
 举个例子，如下
 
 ```python
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
@@ -651,7 +651,7 @@ subprocess提供check_output函数，用于执行脚本并获取结果。
 举个例子，如下
 
 ```python
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import subprocess
@@ -667,7 +667,7 @@ print(f"result: `{output}`")
 callee.py的内容，如下
 
 ```python
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 print('{"Hello":"World"}', end="")
