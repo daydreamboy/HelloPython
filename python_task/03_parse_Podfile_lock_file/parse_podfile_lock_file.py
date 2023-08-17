@@ -58,9 +58,21 @@ POD_VERSIONS='POD_VERSIONS'
 POD_INFO_NAME='pod_name'
 POD_INFO_VERSION='pod_version'
 
-def main():
-    args = run_command_parser()
-    run_podfile_lock_file_parser(args.path, args)
+
+def get_shared_logger():
+    if 'sharedLogger' not in globals():
+        logger = logging.getLogger('Podfile.lock parser')
+        logger.setLevel(logging.DEBUG)
+        logger.propagate = False
+
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+        if not logger.handlers:
+            logger.addHandler(ch)
+
+        globals()['sharedLogger'] = logger
+
+    return globals()['sharedLogger']
 
 
 def get_section_string(file_content, start_string, end_string):
@@ -227,10 +239,10 @@ def get_pod_version_dict(PODS_components, DEPENDENCIES_components):
 
 
 def run_podfile_lock_file_parser(podfile_lock_file_path, args):
-    logging.info("Podfile.lock path: %s" % podfile_lock_file_path)
+    get_shared_logger().info("Podfile.lock file path: %s" % podfile_lock_file_path) if args.debug else None
 
     if not os.path.isfile(podfile_lock_file_path):
-        logging.error("%s is not exist!" % podfile_lock_file_path)
+        get_shared_logger().error("%s is not exist!" % podfile_lock_file_path)
         sys.exit(0)
         return
     
@@ -241,13 +253,13 @@ def run_podfile_lock_file_parser(podfile_lock_file_path, args):
     cocoapods_version = get_cocoapods_version(file_content)
     print(f"cocoapods_version = {cocoapods_version}") if args.debug else None
     PODS_components = get_PODS_components(cocoapods_version, file_content)
-    logging.debug(f"finish {PODS} section") if args.debug else None
+    get_shared_logger().debug(f"finish {PODS} section") if args.debug else None
 
     DEPENDENCIES_components = get_DEPENDENCIES_components(cocoapods_version, file_content)
-    logging.debug(f"finish {DEPENDENCIES} section") if args.debug else None
+    get_shared_logger().debug(f"finish {DEPENDENCIES} section") if args.debug else None
 
     SPEC_CHECKSUMS_components = get_SPEC_CHECKSUMS_components(cocoapods_version, file_content)
-    logging.debug(f"finish {SPEC_CHECKSUMS} section") if args.debug else None
+    get_shared_logger().debug(f"finish {SPEC_CHECKSUMS} section") if args.debug else None
 
     pod_version_dict= get_pod_version_dict(PODS_components, DEPENDENCIES_components)
 
@@ -273,6 +285,7 @@ def run_podfile_lock_file_parser(podfile_lock_file_path, args):
     
     return
 
+
 def run_command_parser():
     my_parser = argparse.ArgumentParser(description='Parse the Podfile.lock file')
     my_parser.add_argument('-p', '--path', help='The path of Podfile.lock file', required=True)
@@ -281,6 +294,12 @@ def run_command_parser():
     my_parser.add_argument('-q', '--query-pod-list', action='store', type=str, nargs='+')
     args = my_parser.parse_args()
     return args
+
+
+def main():
+    args = run_command_parser()
+    run_podfile_lock_file_parser(args.path, args)
+
 
 if __name__ == '__main__':
     sys.exit(main())
