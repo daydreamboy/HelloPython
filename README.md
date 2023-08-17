@@ -677,26 +677,50 @@ print('{"Hello":"World"}', end="")
 
 ### (8) logging
 
-#### a. 修改日志级别
+logging模块是python自带的模块，用于处理日志输出。这里参考[官方使用文档](https://docs.python.org/3/howto/logging.html)，简单介绍如何使用logging模块。
+
+#### a. 日志处理流程
+
+官方文档[^18]提供下面的流程图，用于说明日志的数据流，其中涉及到logger处理、handler处理，以及父logger处理。
+
+![](images/01_logging_flow.png)
+
+在上图中，代码调用`logger.info(...)`，会检查该logger的日志级别是否可以输出，然后创建LogRecord交给filter去过滤，然后给到当前logger持有的handler去处理LogRecord。同样handler也有对应的日志级别和filter，如果可以处理，会检查当前logger是否允许交给父logger处理。同样，父logger处理再走之前的流程。
+
+因此，有下面几个概念
+
+* logger，日志的生产者
+* handler，日志的消费者
+* filter，用于过滤日志
+* 父logger，和当前logger有继承关系
+
+
+
+#### b. 使用默认logger输出日志
+
+logging模块提供下面便利方法，都是使用默认logger来输出日志
+
+```python
+# Note: default is warning log level in Python 3.11.3
+# Only print warning and above level
+logging.debug('This is DEBUG')
+logging.info('This is INFO')
+logging.warning('This is WARNING')
+logging.error('This is ERROR')
+logging.critical('This is CRITICAL')
+```
+
+默认logger的日志级别是Warning，即Warning以及以上级别才会输出日志。
+
+通过getLogger函数，不传参数，会获取默认logger，它的名字是root。
+
+通过setLevel函数可以修改默认日志级别。
 
 举个例子，如下
 
 ```python
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
-import logging
-
-
-def test_default_log_level():
-    logging.debug('This is DEBUG')
-    logging.info('This is INFO')
-    logging.warning('This is WARNING')
-    logging.error('This is ERROR')
-    logging.critical('This is CRITICAL')
-
-
 def test_change_log_level():
+    print(f"------{inspect.stack()[0][3]} called------")
     logging.getLogger().setLevel(logging.DEBUG)
     logging.debug('This is DEBUG')
     logging.info('This is INFO')
@@ -705,24 +729,103 @@ def test_change_log_level():
     logging.critical('This is CRITICAL')
 
 
-def test_custom_logger():
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-    logger.debug('This is DEBUG')
-    logger.info('This is INFO')
-    logger.warning('This is WARNING')
-    logger.error('This is ERROR')
-    logger.critical('This is CRITICAL')
-
-
-test_default_log_level()
-print('-----------')
 test_change_log_level()
-print('-----------')
-test_custom_logger()
+```
+
+> 示例代码，见28_logging_default_logger.py
+
+
+
+#### c. 使用自定义logger输出日志
+
+官方文档[^18]提供一个例子，如下
+
+```python
+import logging
+
+# create logger
+logger = logging.getLogger('simple_example')
+logger.setLevel(logging.DEBUG)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
+
+# 'application' code
+logger.debug('debug message')
+logger.info('info message')
+logger.warning('warn message')
+logger.error('error message')
+logger.critical('critical message')
+```
+
+输出如下
+
+```shell
+$ python simple_logging_module.py
+2005-03-19 15:10:26,618 - simple_example - DEBUG - debug message
+2005-03-19 15:10:26,620 - simple_example - INFO - info message
+2005-03-19 15:10:26,695 - simple_example - WARNING - warn message
+2005-03-19 15:10:26,697 - simple_example - ERROR - error message
+2005-03-19 15:10:26,773 - simple_example - CRITICAL - critical message
 ```
 
 
+
+#### d. 使用单例logger输出日志
+
+举个例子，如下
+
+```python
+def get_shared_logger():
+    """Get a shared logger, @see https://stackoverflow.com/a/13627881"""
+    if 'sharedLogger' not in globals():
+        # create logger
+        logger = logging.getLogger('simple_example')
+        logger.setLevel(logging.DEBUG)
+        # @see https://stackoverflow.com/a/44426266
+        logger.propagate = False
+
+        # create console handler and set level to debug
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+
+        # create formatter
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+        # add formatter to ch
+        ch.setFormatter(formatter)
+
+        # add ch to logger
+        if not logger.handlers:
+            logger.addHandler(ch)
+
+        logger.info(f'{get_shared_logger.__name__} should called once')
+        globals()['sharedLogger'] = logger
+
+    return globals()['sharedLogger']
+
+
+def test_shared_logger():
+    print(f"------{inspect.stack()[0][3]} called------")
+    get_shared_logger().debug('debug message')
+    get_shared_logger().info('info message')
+    get_shared_logger().warning('warn message')
+    get_shared_logger().error('error message')
+    get_shared_logger().critical('critical message')
+
+
+test_shared_logger()
+```
 
 
 
@@ -1153,6 +1256,8 @@ done
 [^15]:https://www.jianshu.com/p/0d55f82d8d08
 [^16]:https://stackoverflow.com/questions/30889494/can-pip-conf-specify-two-index-url-at-the-same-time
 [^17]:https://zhuanlan.zhihu.com/p/404529640
+
+[^18]:https://docs.python.org/3/howto/logging.html
 
 
 
