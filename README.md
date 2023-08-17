@@ -1074,11 +1074,29 @@ Python 3.11.3
 
 
 
-### (2) pip命令
+### (2) 安装包
 
-| 命令                      | 作用    |
-| ------------------------- | ------- |
-| pip install --upgrade pip | 更新pip |
+一般使用`python3 -m pip install <package name>`来安装包，而不是使用`pip3 install <package name>`。原因在于python环境可能有多套，在macOS上有系统python，也可能有Homebrew安装的python。
+
+使用pip3命令，可能是系统的命令，直接使用`python3 -m`命令，安装包到对应版本的python环境中，使用`python --version`查看python版本。
+
+说明
+
+> 在python脚本中，shebang中不要指定具体路径，例如
+>
+> ```shell
+> #!/usr/bin/python3
+> ```
+>
+> 这样限制只能使用特定版本的python，
+>
+> 应该使用env的方式，如下
+>
+> ```shell
+> #!/usr/bin/env python3
+> ```
+>
+> 这样当前shell环境会自动确定python3命令具体来自哪个环境的，系统python的或者Homebrew安装的python
 
 
 
