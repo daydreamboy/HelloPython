@@ -1,22 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# History:
-#   2016-11-12 wesley_chen new version of parsing Podfile.lock
-#   01b,9Nov.2016,caonian   Parser Podfile.lock instead of OneTravelPods.rb
-#   01a,30Oct.2016,caonian  Initial version
-#
-# Usage:
-#   1. Place theone_summary_pod_info.py along with Podfile.lock inside the same folder
-#   2. Type command as followings:
-#       python theone_summary_pod_info.py <folder containing json file>
-#   3. Xcode -> Run Script
-#       python "$PROJECT_DIR/theone_summary_pod_info.py"
-#
-# 1、<project root>/Pods/ONEDebugKit_<xcworkspace name>/Pod/Assets/tag_summary.json
-# 2、<project root>/Pods/ONEDebugKit/Pod/Assets/tag_summary.json
-# 3、根目录
-
 import os
 import sys
 import logging

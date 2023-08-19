@@ -7,31 +7,33 @@ import inspect
 
 def get_shared_logger():
     """Get a shared logger, @see https://stackoverflow.com/a/13627881"""
-    if 'sharedLogger' not in globals():
-        # create logger
-        logger = logging.getLogger('simple_example')
-        logger.setLevel(logging.DEBUG)
-        # @see https://stackoverflow.com/a/44426266
-        logger.propagate = False
+    if 'sharedLogger' in globals():
+        return globals()['sharedLogger']
 
-        # create console handler and set level to debug
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
+    # create logger
+    logger = logging.getLogger('simple_example')
+    logger.setLevel(logging.DEBUG)
+    # @see https://stackoverflow.com/a/44426266
+    logger.propagate = False
 
-        # create formatter
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # create console handler and set level to debug
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
 
-        # add formatter to ch
-        ch.setFormatter(formatter)
+    # create formatter
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-        # add ch to logger
-        if not logger.handlers:
-            logger.addHandler(ch)
+    # add formatter to ch
+    ch.setFormatter(formatter)
 
-        logger.info(f'{get_shared_logger.__name__} should called once')
-        globals()['sharedLogger'] = logger
+    # add ch to logger
+    if not logger.handlers:
+        logger.addHandler(ch)
 
-    return globals()['sharedLogger']
+    logger.info(f'{get_shared_logger.__name__} should called once')
+    globals()['sharedLogger'] = logger
+
+    return logger
 
 
 def test_shared_logger():

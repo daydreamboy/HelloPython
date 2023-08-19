@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 ##
 # This script is used for batch forking all projects under source groups to the target group
 # To configure .env file before run this script
