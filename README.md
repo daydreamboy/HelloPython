@@ -835,19 +835,29 @@ test_shared_logger()
 
 ### (1) python-gitlab
 
+python-gitlab是gitlab对应的一个python客户端(client)，通过操作python-gitlab提供API，实现和手动操作gitlab网站上的交互是一样，例如fork仓库、创建仓库等。
+
 安装方法：
 
 ```shell
 $ pip3 install python-gitlab
 ```
 
+说明
+
+> python-gitlab支持GitLab v3和v4 API，python脚本选取哪个API，要看GitLab网站使用哪种API，可以通过Chrome Inspector，查看url请求是否带v3或v4，确定使用哪个API。
 
 
-#### gitlab v3 API
 
+#### a. gitlab v3 API
 
+要使用v3 API，请确保安装的为python-gitlab的1.4版本[^19]。
 
-https://www.cnblogs.com/40kuai/p/9378038.html
+安装方法：
+
+```shell
+$ pip3 install python-gitlab==1.4
+```
 
 
 
@@ -1276,6 +1286,8 @@ done
 [^17]:https://zhuanlan.zhihu.com/p/404529640
 
 [^18]:https://docs.python.org/3/howto/logging.html
+
+[^19]:https://www.cnblogs.com/40kuai/p/9378038.html
 
 
 
