@@ -98,7 +98,7 @@ def main():
         
         ignored_packages = []  # 存储被忽略的包名
 
-        print(f"依赖的包")
+        print(f"依赖的包:")
         for package_name in package_names:
             if should_ignore(package_name):
                 ignored_packages.append(package_name)  # 记录被忽略的包名
